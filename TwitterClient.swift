@@ -57,7 +57,7 @@ class TwitterClient: BDBOAuth1SessionManager {
             
         }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
             failure(error)
-                
+            print("after the home timeline failure error msg")
         })
     }
     
@@ -74,7 +74,7 @@ class TwitterClient: BDBOAuth1SessionManager {
             
             }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                 failure(error)
-                
+                print("after the verify credentials failure error msg")
         })
     }
     
@@ -83,7 +83,7 @@ class TwitterClient: BDBOAuth1SessionManager {
             let dictionary = response as! NSDictionary
             print(dictionary)
             }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
-                print(error.localizedDescription)
+//                print(error.localizedDescription)
             })
     }
 

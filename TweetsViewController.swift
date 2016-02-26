@@ -24,23 +24,24 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         
         TwitterClient.sharedInstance.homeTimeline({ (tweets: [Tweet]) -> () in
             self.tweets = tweets
-            print(tweets)
             for tweet in tweets {
                 print(tweet.text!)
             }
+            self.tableView.reloadData()
+            
             }) { (error: NSError) -> () in
                 print(error.localizedDescription)
         }
         
+        TwitterClient.sharedInstance.rateLimit()
                 // Do any additional setup after loading the view.
-        tableView.reloadData()
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let tweets = tweets {
             return tweets.count
         } else {
-            return 20
+            return 0
         }
     }
     

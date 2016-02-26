@@ -16,15 +16,15 @@ class TweetCell: UITableViewCell {
     @IBOutlet weak var tweetTimeStamp: UILabel!
     @IBOutlet weak var tweetText: UILabel!
     
-    var user: User!
+    var user: User! 
     
     var tweet: Tweet! {
         didSet {
-            name.text = user.name as? String
-            profilePic.setImageWithURL(user.profilePictureURL!)
-            tweetText.text = tweet.text as? String
+            name.text = "\(tweet.user.name!)"
+            profilePic.setImageWithURL(tweet.user.profilePictureURL!)
+            tweetText.text = "\(tweet.text!)"
             tweetTimeStamp.text = tweet.getProperTimeStamp()
-            twitterHandle.text = user.screenname as? String
+            twitterHandle.text = "\(tweet.user.screenname!)"
         }
     }
     

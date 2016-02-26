@@ -14,6 +14,10 @@ class Tweet: NSObject {
     var finalTimeStamp: NSTimeInterval?
     var retweetCount: Int = 0
     var favoritesCount: Int = 0
+    var name: NSString?
+    var screenname: NSString?
+    
+    var user: User!
     
     init(dictionary: NSDictionary) {
         text = dictionary["text"] as? String
@@ -21,13 +25,14 @@ class Tweet: NSObject {
         retweetCount = (dictionary["retweet_count"] as? Int) ?? 0
         favoritesCount = (dictionary["favourites_count"] as? Int) ?? 0
         
-        let timestampString = dictionary["created_at"] as? String
+        let timestampString = dictionary["created_at"]! as? String
         
         if let timestampString = timestampString {
             let formatter = NSDateFormatter()
             formatter.dateFormat = "EEE MMM d HH:mm:ss Z y"
             timestamp = formatter.dateFromString(timestampString)
         }
+        user = User(dictionary: dictionary["user"] as! NSDictionary)
     }
     
     class func tweetsWithArray(dictionaries: [NSDictionary]) -> [Tweet] {
@@ -44,6 +49,7 @@ class Tweet: NSObject {
     
     func getProperTimeStamp() -> (String) {
         var minutes: Int?
+        
         var seconds: Int?
         var hours: Int?
         var days: Int?
@@ -56,15 +62,23 @@ class Tweet: NSObject {
         
         if seconds < 60 {
             time = String(convertedElapsedTime)
+            time = "\(seconds!)s"
         } else if seconds > 60 {
-            minutes = seconds! / 60
+            minutes = (seconds! / 60)
             time = String(minutes)
-        } else if minutes > 60 {
-            hours = minutes! / 60
+            time = "\(minutes!)m"
+        }
+        minutes = seconds! / 60
+        if minutes > 60 {
+            hours = (minutes! / 60)
             time = String(hours)
-        } else if hours > 24 {
-            days = hours! / 24
+            time = "\(hours!)h"
+        }
+        hours = minutes! / 60
+        if hours > 24 {
+            days = (hours! / 24)
             time = String(days)
+            time = "\(days!)d"
         }
         
         return time

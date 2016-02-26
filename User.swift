@@ -20,14 +20,15 @@ class User: NSObject {
     init(dictionary: NSDictionary) {
         self.dictionary = dictionary
         
-        name = dictionary["name"] as? String
-        screenname = "@\(dictionary["screen_name"] as? String)"
+        name = dictionary["name"]! as? String
+        let tempScreenName = dictionary["screen_name"]
+        screenname = "@\(tempScreenName!)"
         
         let profileUrlString = dictionary["profile_image_url_https"] as? String
         if let profileUrlString = profileUrlString {
             profilePictureURL = NSURL(string: profileUrlString)
         }
-        tagline = dictionary["description"] as? String
+        tagline = dictionary["description"]! as? String
     }
     
     static var _currentUser: User?
